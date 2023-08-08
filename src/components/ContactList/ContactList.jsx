@@ -9,11 +9,22 @@ const ContactList = () => {
   const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
+
+
+  // const getVisibleContacts = () => {
+  //   const normalizedFilter = filter.toLowerCase();
+  //   return contacts.filter(contact =>
+  //     contact.name.toLowerCase().includes(normalizedFilter)
+  //   );
+  // };
+
   const getVisibleContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
+    return contacts.filter(contact => {
+      if (contact.name) {  // Перевірка на наявність властивості 'name'
+        return contact.name.toLowerCase().includes(filter.toLowerCase());
+      }
+      return false;  // або return true, якщо ви хочете включити такі контакти
+    });
   };
 
   const removeContact = contactId => {

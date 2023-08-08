@@ -15,15 +15,18 @@ const ContactForm = () => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    const isInContacts = contacts.some(
-      contact => name.toLowerCase() === contact.name.toLowerCase()
-    );
+    const isInContacts = contacts.find(contact => {
+      if (contact.name) {
+        return name.toLowerCase() === contact.name.toLowerCase();
+      }
+      return false;
+    });
 
     if (isInContacts) {
-      alert(`${contacts.name} is already in contacts`);
+      alert(`${name} is already in contacts`);
       return;
     }
-    dispatch(addContacts({ id: nanoid(), ...contacts }));
+    dispatch(addContacts({ id: nanoid(), name: name, number: number }));
 
     setName('');
     setNumber('');
@@ -39,7 +42,7 @@ const ContactForm = () => {
         setNumber(value);
         break;
       default:
-        return;
+        break;
     }
   };
 
